@@ -1,0 +1,10 @@
+person:object < 2
+    id:int
+    username:str
+    active:bool
+    memberSince:ts=UTC+5 % 3
+    location:object
+        address:str
+        city:str
+    tags:object < 1
+        name:str
