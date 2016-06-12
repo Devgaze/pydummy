@@ -31,9 +31,19 @@ def to_bool(value):
     }
     return options.get(value, "To provide boolean value use one of the following: True, true, False, false")
 
-def generate_dummy_content(identifier):
-    print identifier
 
+def generate_number():
+    return 1234
+    
+def generate_string():
+    return 'heyaaa'
+    
+def generate_boolean():
+    return True
+    
+def generate_timestamp():
+    return '2016-06-16T15:03:12.000Z'
+    
 
 def parse_template(filepath, parent_node = None, parse_from_line = 0, indentation = 0):
     if (filepath is None):
@@ -42,10 +52,11 @@ def parse_template(filepath, parent_node = None, parse_from_line = 0, indentatio
 
     output = []
     id_counter = 0
-    node = parent_node if parent_node else {};
-    
+    node = parent_node if parent_node else {};    
+
     with open(filepath) as f:
         for idx, line in enumerate(f):
+            line_metadata = {}
             if idx >= parse_from_line:
                 leading_spaces = len(line) - len(line.lstrip())
 
@@ -53,7 +64,7 @@ def parse_template(filepath, parent_node = None, parse_from_line = 0, indentatio
                     
                     prop, value = line.split(':')
                     label = prop.strip()
-                    value = value.strip()
+                    value = value.strip().lower()
 
                     if value.startswith('object'):
                         if  ('<' in value) or (' < ' in value):
@@ -69,23 +80,30 @@ def parse_template(filepath, parent_node = None, parse_from_line = 0, indentatio
                             node[label] = parse_template(filepath, node[label], idx + 1, leading_spaces + SOURCE_INDENTATION_LENGTH)
 
                     
-                    elif value.lower() == 'int' or value.lower() == 'integer':
-                        node[label] = ++id_counter
+                    elif value == 'int' or value == 'integer':
+                        node[label] = generate_number()
 
-                    elif value.lower() == 'str' or value.lower() == 'string':
-                        node[label] = generate_dummy_content(label)
+                    elif value == 'str' or value == 'string':
+                        node[label] = generate_string()
 
-                    elif value.lower() == 'bool' or value.lower() == 'boolean':
-                        node[label] = to_bool('true')
+                    elif value == 'bool' or value == 'boolean':
+                        node[label] = generate_boolean()
 
-                    elif value.startswith('ts'):
-                        # value.lower() == 'ts' or value.lower() == 'timestamp':
-                        node[label] = str(value)
+                    elif value.split('=')[0] == 'ts' or value == 'timestamp':
+                        node[label] = generate_timestamp()
 
                     else:
-                        node[label] = 'You are trying to assign non-supported data type. Supported data types are: str, int, bool, ts.'
+                        print """
+                        You are trying to assign non-supported data type found in 
 
-    return node
+                        %s
+                            @line %d     %s
+
+                        Supported data types are: int|integer, str|string, bool|boolean, ts|timestamp 
+                        """ % (filepath, idx + 1, line)
+                        sys.exit()
+
+        return node
     
 def usage():
     os.system('clear')

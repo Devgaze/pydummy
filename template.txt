@@ -1,4 +1,4 @@
-person:object < 20
+person:object < 2
     id:int
     username:str
     active:bool
