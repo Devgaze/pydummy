@@ -1,10 +1,14 @@
 person:object < 2
     id:int
-    username:str
+    name:str
+    surname:str
+    email:str
     active:bool
-    memberSince:ts=UTC+5 % 3
-    location:object
-        address:str
+    memberSince:ts
+    address:object
+        street:str
         city:str
+        zip:str
+        country:str
     tags:object < 1
-        name:str
+        tag:str
