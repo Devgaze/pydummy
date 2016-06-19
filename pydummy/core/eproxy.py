@@ -32,7 +32,7 @@ class %s(DummyData):
 class EntityProxy(object):
     """Auto-loader of entity classes based on provided type"""
 
-    def __init__(self, identifier, lang='en'):
+    def __init__(self, identifier=None, lang='en'):
         if not identifier:
             raise "Cannot invoke entity loader without entity identifier"
 

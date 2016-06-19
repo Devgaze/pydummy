@@ -1,11 +1,10 @@
-person:object < 1
+person:object < 10
     id:integer=[1:10]
     name:string
-    score:float=[-230.00:100.00]%6
+    score:float=[-10.00:10.00]%7
     email:str
     active:bool
     memberSince:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]%+4
-    filing:str
     address:object
         street:str
         city:str

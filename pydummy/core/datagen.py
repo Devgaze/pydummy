@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 from .eproxy import EntityProxy
 from .etype import EntityType
 
@@ -7,14 +6,14 @@ from .etype import EntityType
 class DataGenerator(object):
     """DataGenerator class"""
 
-    def __init__(self, template, language='en'):
+    def __init__(self, template=None, language='en'):
         """
         DataGenerator constructor
         - for arguments expects template file name or path
           and (optionaly) language
         """
-        if template == '' or not self.is_file(template):
-            raise "Invalid template file name or path"
+        if not template:
+            raise "Template not provided"
 
         self.template = template
         self.language = language
@@ -23,9 +22,6 @@ class DataGenerator(object):
 
     def get(self):
         return self.data
-
-    def is_file(self, template):
-        return os.path.isfile(template)
 
     def generate_data(self):
         self.data = self.parse_template()
@@ -51,7 +47,7 @@ class DataGenerator(object):
                     elif leading == indent:
                         prop, value = line.split(':', 1)
                         label = prop.strip()
-                        value = value.strip().lower()
+                        value = value.strip()
 
                         entity_type = EntityType(value)
 

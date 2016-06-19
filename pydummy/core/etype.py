@@ -4,6 +4,75 @@ import time
 import random
 import datetime
 
+INTEGER_WRONG_ORDER = """
+Error at: %s
+Integer range modifier needs to be [min:max], not [max:min]
+
+Example:
+    houseNumber:int=[1:126]
+
+Falling back to app-range random integer
+"""
+
+INTEGER_WRONG_MOD = """
+Error at: %s
+Something is wrong with the modifier, needs to be [min:max]
+
+Example:
+    houseNumber:int=[1:126]
+
+Falling back to app-range random integer
+"""
+
+
+FLOAT_WRONG_ORDER = """
+Error at: %s
+Float range modifier needs to be [min:max], not [max:min]
+
+Example:
+    alterPriceBy:float=[-20.00:10.75]
+
+Falling back to app-range random float
+"""
+
+FLOAT_WRONG_MOD = """
+Error at: %s
+Something is wrong with the modifier, needs to be [min:max]
+    price:float=[250:275]
+
+with optional decimal place modifier
+    leverage:float=[-10,10]%7
+
+will output somthing like: -4.3128535
+
+Falling back to app-range random integer
+"""
+
+TIMESTAMP_WRONG_ORDER = """
+Error at: %s
+Timestamp range modifier needs to be [min:max], not [max:min]:
+
+Example:
+    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]
+
+Falling back to app-range random timestamp
+"""
+
+TIMESTAMP_WRONG_MOD = """
+Error at: %s
+
+For timestamp modifiers use following format:
+    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]
+
+optionaly with timezone (Z for UTC)
+    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59] \u0025 Z
+
+or in hours with prefix (+/-)
+    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]+11
+
+Falling back to app-range random timestamp
+"""
+
 
 class EntityType(object):
     """Entity type handler"""
@@ -81,19 +150,11 @@ class EntityType(object):
                     return random.randint(start, end)
 
                 else:
-                    print "Error at: %s " % self.identifier
-                    print "For integer modifiers use following format:"
-                    print "Example:  houseNumber:int=[1:126]"
-                    print "Falling back to app-range random integer"
+                    print INTEGER_WRONG_ORDER % self.identifier
                     return random.randint(0, 999999)
 
             else:
-                print """
-                Modifier found in %s, but format is not correct.
-                """ % self.identifier
-                print "For integer modifiers use following format:"
-                print "Example:  houseNumber:int=[1:126]"
-                print "Falling back to app-range random integer"
+                print INTEGER_WRONG_MOD % self.identifier
                 return random.randint(0, 999999)
 
         else:
@@ -111,6 +172,7 @@ class EntityType(object):
             if modifier_validator:
                 if '%' in self.modifier:
                     rng, l = self.modifier.split('%')
+                    l = int(l)
                     l = l if l <= 17 and l >= 1 else 17
 
                 else:
@@ -125,19 +187,11 @@ class EntityType(object):
                     return round(random.uniform(start, end), l)
 
                 else:
-                    print "Error at: %s " % self.identifier
-                    print "For float modifiers use following format:"
-                    print "Example:  houseNumber:float=[122.33:126.21]"
-                    print "Falling back to app-range random float"
+                    print FLOAT_WRONG_ORDER % self.identifier
                     return round(random.uniform(0, 999999), l)
 
             else:
-                print """
-                Modifier found in %s, but format is not correct.
-                """ % self.identifier
-                print "For float modifiers use following format:"
-                print "Example:  houseNumber:float=[122.33:126.21]"
-                print "Falling back to app-range random float"
+                print FLOAT_WRONG_MOD % self.identifier
                 return round(random.uniform(0, 999999), 2)
 
         else:
@@ -189,31 +243,12 @@ class EntityType(object):
                     return self.to_iso_datetime_format(dt, tz)
 
                 else:
-                    print """
-                    Error at: %s
-
-                    For timestamp modifiers use following format:
-                    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]
-
-                    optionaly with timezone
-                    Zulu or UTC
-                    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]\%Z
-
-                    or in hours with prefix (+/-)
-                    published:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]+11
-
-                    Falling back to app-range random timestamp"
-                    """ % self.identifier
+                    print TIMESTAMP_WRONG_ORDER % self.identifier
                     dt = self.get_app_date_range()
                     return self.to_iso_datetime_format(dt, tz)
 
             else:
-                print """
-                Modifier found in %s, but format is not correct.
-                """ % self.identifier
-                print "For integer modifiers use following format:"
-                print "Example:  houseNumber:int=[1:126]"
-                print "Falling back to app-range random integer"
+                print TIMESTAMP_WRONG_MOD % self.identifier
                 dt = self.get_app_date_range()
                 return self.to_iso_datetime_format(dt)
 
