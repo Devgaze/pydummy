@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
-import getopt
+import sys
 import json
-from .datagen import DataGenerator
-
+import getopt
+from .core.datagen import DataGenerator
 
 __version__ = "0.0.0"
-
-
-# TMP = '/Users/alen/dev/github/pydummy'
-CURRENT_DIR = os.getcwd()
 
 
 def usage():
@@ -66,15 +61,6 @@ def usage():
     """
 
 
-def setup_environment():
-    # sys.path = [CURRENT_DIR] + sys.path
-    sys.path.append(CURRENT_DIR)
-
-
-def clean_environment():
-    sys.path.remove(CURRENT_DIR)
-
-
 def main(argv):
 
     template = ''
@@ -82,6 +68,7 @@ def main(argv):
     language = ''
     indentation = 4
     sort_keys = True
+    CURRENT_DIR = os.getcwd()
 
     try:
         opts, args = getopt.getopt(
@@ -147,7 +134,7 @@ def main(argv):
     outputfile = outputfile if outputfile != "" else "dummy.json"
     outputfile = os.path.join(cwd, outputfile)
 
-    setup_environment()
+    sys.path.append(CURRENT_DIR)
 
     dg = DataGenerator(template, language)
 
@@ -159,4 +146,4 @@ def main(argv):
             sort_keys=sort_keys
         )
 
-    clean_environment()
+    sys.path.remove(CURRENT_DIR)
