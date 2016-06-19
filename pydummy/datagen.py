@@ -54,7 +54,6 @@ class DataGenerator(object):
                         value = value.strip().lower()
 
                         entity_type = EntityType(value)
-                        entity = EntityProxy(label).getInstance()
 
                         typ = entity_type.get_type()
 
@@ -81,7 +80,8 @@ class DataGenerator(object):
                             node[label] = entity_type.get_primitive_value()
 
                         else:
-                            node[label] = entity.getData()
+                            entity = EntityProxy(label, lang).get_instance()
+                            node[label] = entity.get_data() if entity else ""
 
                     else:
                         pass

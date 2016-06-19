@@ -9,6 +9,10 @@ from .datagen import DataGenerator
 __version__ = "0.0.0"
 
 
+# TMP = '/Users/alen/dev/github/pydummy'
+CURRENT_DIR = os.getcwd()
+
+
 def usage():
     os.system('clear')
 
@@ -60,6 +64,15 @@ def usage():
         pydummy --template=<template_filepath> --output <json_filename>
 
     """
+
+
+def setup_environment():
+    # sys.path = [CURRENT_DIR] + sys.path
+    sys.path.append(CURRENT_DIR)
+
+
+def clean_environment():
+    sys.path.remove(CURRENT_DIR)
 
 
 def main(argv):
@@ -134,6 +147,8 @@ def main(argv):
     outputfile = outputfile if outputfile != "" else "dummy.json"
     outputfile = os.path.join(cwd, outputfile)
 
+    setup_environment()
+
     dg = DataGenerator(template, language)
 
     with open(outputfile, 'wb') as outfile:
@@ -143,3 +158,5 @@ def main(argv):
             indent=indentation,
             sort_keys=sort_keys
         )
+
+    clean_environment()

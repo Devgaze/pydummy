@@ -1,14 +1,15 @@
-person:object < 2
-    id:int
-    name:str
-    surname:str
+person:object < 1
+    id:integer=[1:10]
+    name:string
+    score:float=[-230.00:100.00]%6
     email:str
     active:bool
-    memberSince:ts
+    memberSince:ts=[2016-01-01T00:00:00|2016-12-31T23:59:59]%+4
+    filing:str
     address:object
         street:str
         city:str
         zip:str
         country:str
-    tags:object < 1
+    tags:object 
         tag:str

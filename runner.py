@@ -4,7 +4,7 @@
 """Convenience wrapper for running pydummy directly from source tree."""
 
 import sys
-from pydummy.pydummy import main
+from pydummy.__main__ import main
 
 if __name__ == '__main__':
     main(sys.argv[1:])
