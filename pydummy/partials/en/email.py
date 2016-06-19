@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import random
-from pydummy.dummydata import DummyData
+from pydummy.core.dummydata import DummyData
 from pydummy.eproxy import EntityProxy
 
 

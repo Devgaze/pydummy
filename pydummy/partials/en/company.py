@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pydummy.dummydata import DummyData
+from pydummy.core.dummydata import DummyData
 
 
 class DummyCompany(DummyData):

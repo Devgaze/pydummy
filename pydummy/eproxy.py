@@ -36,7 +36,7 @@ class EntityProxy(object):
             Inside of that file paste following and update accordingly:
 
             # -*- coding: utf-8 -*-
-            from pydummy.dummydata import DummyData
+            from pydummy.core.dummydata import DummyData
 
 
             class %s(DummyData):
