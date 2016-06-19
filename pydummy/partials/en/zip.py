@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyZip:
+
+class DummyZip(DummyData):
 
     def __init__(self):
-        self.zip_list = [
+        self.data = [
             'V5K 0A1',
             '10000',
             'L3 3DB',
@@ -15,8 +17,3 @@ class DummyZip:
             '90005',
             'M4N 1K1'
         ]
-
-        self.list_all()
-
-    def list_all(self):
-        return self.zip_list

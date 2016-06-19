@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyCity:
+
+class DummyCity(DummyData):
 
     def __init__(self):
-        self.city_list = [
-            'Vancouver', 
-            'New York',  
-            'Liverpool',    
-            'Dublin',    
-            'Perth',    
-            'Auckland',  
-            'London',    
-            'Miami',     
+        self.data = [
+            'Vancouver',
+            'New York',
+            'Liverpool',
+            'Dublin',
+            'Perth',
+            'Auckland',
+            'London',
+            'Miami',
             'Los Angeles',
-            'Toronto',   
+            'Toronto',
         ]
-
-        self.list_all()
-
-    def list_all(self):
-        return self.city_list

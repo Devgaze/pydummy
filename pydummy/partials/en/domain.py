@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyDomain:
+
+class DummyDomain(DummyData):
 
     def __init__(self):
-        self.domain_list = [
+        self.data = [
             'sweetmail.com',
             'fastsnail.net',
             'paperlessmail.org',
@@ -15,8 +17,3 @@ class DummyDomain:
             'depost.de',
             'skandimail.dk'
         ]
-
-        self.list_all()
-
-    def list_all(self):
-        return self.domain_list

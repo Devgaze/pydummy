@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyCompany:
+
+class DummyCompany(DummyData):
 
     def __init__(self):
-        self.company_list = [
+        self.data = [
             ('Maxwell Inc.', 'maxwell.com'),
             ('Rickman & Son', 'rickmanandson.us'),
             ('Marshall Transports Ltd.', 'marshall.co.uk'),
@@ -15,8 +17,3 @@ class DummyCompany:
             ('Misfit Inc.', 'misfit.co.nz'),
             ('Tropical Jet Airlines', 'tropicaljet.us')
         ]
-        
-        self.list_all()
-
-    def list_all(self):
-        return self.company_list

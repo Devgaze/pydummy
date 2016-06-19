@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyName:
+
+class DummyName(DummyData):
 
     def __init__(self):
-        self.name_list = [
+        self.data = [
             'Mike',
             'Julia',
             'Harold',
@@ -15,8 +17,3 @@ class DummyName:
             'Charles',
             'Fionna'
         ]
-
-        self.list_all()
-
-    def list_all(self):
-        return self.name_list

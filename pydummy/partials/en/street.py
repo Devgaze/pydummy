@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from pydummy.dummydata import DummyData
 
-class DummyStreet:
+
+class DummyStreet(DummyData):
 
     def __init__(self):
-        self.street_list = [
+        self.data = [
             '71 East Hastings',
             '72 East Hastings',
             '713 East Hastings',
@@ -15,8 +17,3 @@ class DummyStreet:
             '784 East Hastings',
             '799 East Hastings'
         ]
-
-        self.list_all()
-
-    def list_all(self):
-        return self.street_list
